@@ -1,0 +1,26 @@
+﻿<UserControl
+    x:Class="NzzApp.UWP.Controls.DepartmentWebBrowser"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Controls">
+
+    <Grid>
+        <WebView Source="{x:Bind HomeItemViewModel.HtmlDepartmentPath, Mode=OneWay}"
+                 Margin="{x:Bind HomeItemViewModel.ShowSubDepartments, Converter={StaticResource BoolToMarginConverter}, ConverterParameter='0,72,0,0-0,0,0,0', Mode=OneWay}"/>
+
+        <Button Style="{StaticResource RoundButtonStyle}"
+                Background="{ThemeResource ThemeBrush}"
+                Command="{x:Bind HomeItemViewModel.SelectSubDepartment}"
+                CommandParameter="{x:Bind HomeItemViewModel.Department}"
+                Margin="12"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                Foreground="White"
+                Content="&#xE10F;"/>
+        
+        <local:SubDepartmentsControl ItemsSource="{x:Bind HomeItemViewModel.Department.SubDepartments, Mode=OneWay}"
+                                     Command="{x:Bind HomeItemViewModel.SelectSubDepartment, Mode=OneWay}"
+                                     x:Name="SubDepartmentsControl"
+                                     x:DeferLoadStrategy="Lazy"/>
+    </Grid>
+</UserControl>

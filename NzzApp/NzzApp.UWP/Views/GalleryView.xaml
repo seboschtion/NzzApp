@@ -1,0 +1,20 @@
+﻿<application:View
+    x:Class="NzzApp.UWP.Views.GalleryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:NzzApp.UWP.Controls"
+    xmlns:application="using:Sebastian.Toolkit.Application"
+    mc:Ignorable="d">
+    <Page.Transitions>
+        <TransitionCollection>
+            <PopupThemeTransition/>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <controls:GalleryControl GalleryItem="{x:Bind GalleryViewModel.Gallery, Mode=OneWay}"
+                             FontFamily="{x:Bind GalleryViewModel.FontFamily, Mode=OneWay}"/>
+</application:View>
+

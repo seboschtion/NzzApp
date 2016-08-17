@@ -1,0 +1,116 @@
+﻿<UserControl
+    x:Class="NzzApp.UWP.Controls.SubDepartmentsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Controls">
+    <UserControl.Resources>
+        <Storyboard x:Name="HideFullListStoryboard">
+            <Storyboard x:Name="ShowLineStoryboard" TargetName="BottomLine" TargetProperty="Opacity">
+                <DoubleAnimation To="1" Duration="00:00:0.5">
+                    <DoubleAnimation.EasingFunction>
+                        <PowerEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="HideOverlayStoryboard" TargetName="Overlay" TargetProperty="Opacity">
+                <DoubleAnimation To="0" Duration="00:00:0.5">
+                    <DoubleAnimation.EasingFunction>
+                        <PowerEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="NarrowRectStoryboard" TargetName="RectangleGeometry" TargetProperty="(Transform).(TranslateTransform.Y)">
+                <DoubleAnimation To="-258" Duration="00:00:0.5">
+                    <DoubleAnimation.EasingFunction>
+                        <PowerEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+        </Storyboard>
+
+        <Storyboard x:Name="ShowFullListStoryboard">
+            <Storyboard x:Name="HideLineStoryboard" TargetName="BottomLine" TargetProperty="Opacity">
+                <DoubleAnimation To="0" Duration="00:00:0.5">
+                    <DoubleAnimation.EasingFunction>
+                        <PowerEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="ShowOverlayStoryboard" TargetName="Overlay" TargetProperty="Opacity">
+                <DoubleAnimation To="0.8" Duration="00:00:0.5">
+                    <DoubleAnimation.EasingFunction>
+                        <PowerEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="WideRectStoryboard" TargetName="RectangleGeometry" TargetProperty="(Transform).(TranslateTransform.Y)">
+                <DoubleAnimation To="0" Duration="00:00:0.5">
+                    <DoubleAnimation.EasingFunction>
+                        <PowerEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                Height="60"
+                VerticalAlignment="Top"/>
+        <Border Opacity="0"
+                Visibility="Collapsed"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                x:Name="Overlay"/>
+        <Grid x:Name="RootGrid"
+              VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Line Stroke="{ThemeResource ThemeBrush}"
+                  StrokeThickness="1"
+                  X1="0"
+                  X2="360"
+                  StrokeDashArray="4,2"
+                  VerticalAlignment="Top"
+                  Grid.ColumnSpan="2"/>
+            <RichTextBlock local:ListRichTextBlockExtensions.ButtonStyle="{StaticResource DepartmentButton}"
+                           local:ListRichTextBlockExtensions.ItemsSource="{x:Bind ItemsSource, Mode=OneWay}"
+                           local:ListRichTextBlockExtensions.Command="{x:Bind Command, Mode=OneWay}"
+                           SizeChanged="RichTextBlock_OnSizeChanged"
+                           Margin="12"
+                           VerticalAlignment="Center"
+                           Grid.Column="0"
+                           x:Name="RichTextBlock">
+                <RichTextBlock.Clip>
+                    <RectangleGeometry x:Name="RectangleGeometry" Rect="0,0,360,300">
+                        <RectangleGeometry.Transform>
+                            <TranslateTransform Y="-258"/>
+                        </RectangleGeometry.Transform>
+                    </RectangleGeometry>
+                </RichTextBlock.Clip>
+            </RichTextBlock>
+            <ToggleButton Grid.Column="1"
+                          Margin="0,12,12,12"
+                          Click="ButtonBase_OnClick"
+                          VerticalAlignment="Top"
+                          Style="{StaticResource MenuToggleButtonStyle}"
+                          x:DeferLoadStrategy="Lazy"
+                          x:Name="ToggleButton"/>
+            <Line Stroke="{ThemeResource ThemeBrush}"
+                  StrokeThickness="1"
+                  X1="0"
+                  X2="360"
+                  StrokeDashArray="4,2"
+                  VerticalAlignment="Top"
+                  Grid.ColumnSpan="2"
+                  Grid.Column="0"
+                  Margin="0,60,0,0"
+                  x:Name="BottomLine"/>
+        </Grid>
+    </Grid>
+</UserControl>

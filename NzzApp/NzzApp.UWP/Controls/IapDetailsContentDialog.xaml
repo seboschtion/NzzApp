@@ -1,0 +1,69 @@
+﻿<ContentDialog
+    x:Class="NzzApp.UWP.Controls.IapDetailsContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="UserControl"
+    Background="{ThemeResource ThemeBrush}">
+
+    <Grid x:Name="ContentGrid">
+        <Grid Margin="0,12"
+              Visibility="{x:Bind ProductItemWrapper.Processing, Mode=OneWay, Converter={StaticResource NotBoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{x:Bind ProductItemWrapper.Product.Name, Mode=OneWay}"
+                       Visibility="{x:Bind ProductItemWrapper.Available, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Foreground="White"
+                       Margin="0,0,0,12"
+                       Style="{StaticResource H3TextBlockStyle}"/>
+
+            <TextBlock x:Uid="IapDonationDialogNotAvailableTitle"
+                       Margin="0,0,0,12"
+                       Visibility="{x:Bind ProductItemWrapper.Available, Mode=OneWay, Converter={StaticResource NotBoolToVisibilityConverter}}"
+                       Grid.Row="0"
+                       Foreground="White"
+                       Style="{StaticResource H3TextBlockStyle}"/>
+
+            <TextBlock Text="{x:Bind ProductItemWrapper.Product.Description, Mode=OneWay}"
+                       Visibility="{x:Bind ProductItemWrapper.Available, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                       Grid.Row="1"
+                       Foreground="White"
+                       Style="{StaticResource NiceTextBlockStyle}"/>
+
+
+            <TextBlock x:Uid="IapDonationDialogNotAvailableText"
+                       Visibility="{x:Bind ProductItemWrapper.Available, Mode=OneWay, Converter={StaticResource NotBoolToVisibilityConverter}}"
+                       Grid.Row="1"
+                       Foreground="White"
+                       Style="{StaticResource NiceTextBlockStyle}"/>
+
+            <Button Content="{x:Bind ProductItemWrapper.Product.FormattedPrice, Mode=OneWay}"
+                    Visibility="{x:Bind ProductItemWrapper.Available, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Click="ButtonBase_OnClick"
+                    Grid.Row="2"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Right"/>
+
+            <Button x:Uid="IapDonationDialogNotAvailableButtonClose"
+                    Visibility="{x:Bind ProductItemWrapper.Available, Mode=OneWay, Converter={StaticResource NotBoolToVisibilityConverter}}"
+                    Click="ButtonBase_OnClick"
+                    Grid.Row="2"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Right"/>
+        </Grid>
+
+        <ProgressRing IsActive="{x:Bind ProductItemWrapper.Processing, Mode=OneWay}"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center"
+                      Margin="48"
+                      Foreground="White"/>
+        
+    </Grid>
+</ContentDialog>

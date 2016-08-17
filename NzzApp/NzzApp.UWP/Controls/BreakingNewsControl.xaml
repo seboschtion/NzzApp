@@ -1,0 +1,47 @@
+﻿<UserControl
+    x:Class="NzzApp.UWP.Controls.BreakingNewsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Controls"
+    xmlns:articles="using:NzzApp.Model.Contracts.Articles">
+
+    <Grid x:Name="MainGrid"
+          Margin="0,0,0,12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Border Height="60"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+        <Line StrokeThickness="1"
+              X1="0"
+              X2="360"
+              Stroke="{ThemeResource WarningBrush}"
+              StrokeDashArray="4,2"
+              VerticalAlignment="Top"/>
+        <Line StrokeThickness="1"
+              X1="0"
+              X2="360"
+              Stroke="{ThemeResource WarningBrush}"
+              StrokeDashArray="4,2"
+              VerticalAlignment="Bottom"/>
+        <FlipView ItemsSource="{Binding Source.Articles, Mode=OneWay}"
+                  x:Name="FlipView"
+                  Margin="0,6"
+                  Background="Transparent"
+                  VerticalAlignment="Top"
+                  Tapped="FlipView_OnTapped">
+            <FlipView.ItemTemplate>
+                <DataTemplate x:DataType="articles:IArticle">
+                    <TextBlock Style="{StaticResource NiceTextBlockStyle}"
+                               VerticalAlignment="Center"
+                               MaxLines="2"
+                               Margin="12,0"
+                               TextTrimming="CharacterEllipsis">
+                        <Run Text="{x:Bind SubTitle}" FontWeight="Bold" Foreground="{ThemeResource WarningBrush}"/>
+                        <Run Text="{x:Bind Title}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+    </Grid>
+</UserControl>

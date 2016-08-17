@@ -1,0 +1,69 @@
+﻿<UserControl
+    x:Class="NzzApp.UWP.Controls.DepartmentOverviewControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Controls"
+    x:Name="UserControl">
+
+    <Grid>
+        <StackPanel x:Name="NoDataStackPanel"
+                    x:DeferLoadStrategy="Lazy"
+                    VerticalAlignment="Center"
+                    Visibility="{x:Bind HomeItemViewModel.HasItems, Converter={StaticResource NotBoolToVisibilityConverter}, Mode=OneWay}"
+                    Margin="{x:Bind MoveContent, Converter={StaticResource BoolToMarginConverter}, ConverterParameter='0,72,0,0-0,0,0,0', Mode=OneWay}">
+            <TextBlock x:Uid="NoArticlesTextBlock"
+                       Text="fail fail fail"
+                       Style="{StaticResource DefaultTextBlockStyle}"
+                       TextAlignment="Center"
+                       MaxWidth="200"
+                       Margin="24"
+                       TextWrapping="Wrap"/>
+            <Button x:Uid="NoDataTryAgainButton"
+                    Content="retry"
+                    Style="{StaticResource DefaultButtonStyle}"
+                    Command="{x:Bind HomeItemViewModel.SyncArticlesCommand}"
+                    HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <ListView ItemsSource="{x:Bind HomeItemViewModel.Articles, Mode=OneWay}"
+                  Visibility="{x:Bind HomeItemViewModel.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                  x:Name="List"
+                  Loaded="List_OnLoaded"
+                  ChoosingItemContainer="List_OnChoosingItemContainer"
+                  Style="{StaticResource DefaultListViewStyle}"/>
+        
+        <Button Style="{StaticResource RoundButtonStyle}"
+                Background="{ThemeResource ThemeBrush}"
+                Foreground="White"
+                Content="&#xE110;"
+                Margin="6"
+                VerticalAlignment="Bottom"
+                Visibility="Collapsed"
+                Click="ScrollToTopButton_OnClick"
+                x:Name="ScrollToTopButton"
+                HorizontalAlignment="Right"/>
+
+        <local:SubDepartmentsControl ItemsSource="{x:Bind HomeItemViewModel.Department.SubDepartments, Mode=OneWay}"
+                                     Command="{x:Bind HomeItemViewModel.ClickDepartmentCommand, Mode=OneWay}"
+                                     x:Name="SubDepartmentsControl"
+                                     x:DeferLoadStrategy="Lazy">
+            <local:SubDepartmentsControl.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </local:SubDepartmentsControl.Transitions>
+        </local:SubDepartmentsControl>
+
+        <local:BreakingNewsControl Source="{x:Bind HomeItemViewModel.BreakingNews, Mode=OneWay}"
+                                   Command="{x:Bind HomeItemViewModel.ClickBreakingNews, Mode=OneWay}"
+                                   x:Name="BreakingNewsControl"
+                                   x:DeferLoadStrategy="Lazy">
+            <local:BreakingNewsControl.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </local:BreakingNewsControl.Transitions>
+        </local:BreakingNewsControl>
+    </Grid>
+</UserControl>
+ 

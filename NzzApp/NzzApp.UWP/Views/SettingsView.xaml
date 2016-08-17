@@ -1,0 +1,135 @@
+﻿<application:View
+    x:Class="NzzApp.UWP.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:application="using:Sebastian.Toolkit.Application"
+    mc:Ignorable="d">
+    <Page.Transitions>
+        <TransitionCollection>
+            <PopupThemeTransition/>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.Resources>
+            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="Margin" Value="0,6"/>
+            </Style>
+        </Grid.Resources>
+        <Pivot x:Uid="MainSettingsPivot" Title="NZZ App">
+            <Pivot.TitleTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"
+                               Style="{StaticResource H1TextBlockStyle}"
+                               Margin="0"/>
+                </DataTemplate>
+            </Pivot.TitleTemplate>
+            <Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"
+                               Style="{StaticResource H3TextBlockStyle}"
+                               Margin="0,0,0,12"/>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.Items>
+                <PivotItem x:Uid="SettingsPivotItem" Header="settings">
+                    <StackPanel>
+                        <ToggleSwitch x:Uid="LiveTileToggleSwitch"
+                                      IsOn="{x:Bind SettingsViewModel.BreakingLiveTileEnabled, Mode=OneWay}"
+                                      Header="live tile"
+                                      FontFamily="Georgia"
+                                      x:Name="LiveTileToggleSwitch"
+                                      Toggled="LiveTileToggleSwitch_OnToggled"/>
+                        <TextBlock Style="{StaticResource NiceTextBlockStyle}"
+                                   x:Uid="LiveTileToggleSwitchInfo"
+                                   Opacity="0.7"
+                                   Text="Be aware that this app must be allowed to run background tasks by the battery saver."/>
+                        <TextBlock Visibility="{Binding Converter={StaticResource DebugToVisibilityConverter}}">
+                            <Run Text="LastLiveTileTaskExecutionDate: "/>
+                            <LineBreak/>
+                            <Run Text="{x:Bind SettingsViewModel.LastLiveTileTaskExecutionDate}"/>
+                        </TextBlock>
+                        <ToggleSwitch x:Uid="FontFamilyToggleSwitch"
+                                      IsOn="{x:Bind SettingsViewModel.ArticleFontFamilyIsSerif, Mode=OneWay}"
+                                      Header="font family"
+                                      FontFamily="Georgia"
+                                      x:Name="FontFamilyToggleSwitch"/>
+                        <Slider Header="fontsize"
+                                x:Uid="FontSizeSlider"
+                                Foreground="{ThemeResource ThemeBrush}"
+                                Minimum="10"
+                                Maximum="28"
+                                FontFamily="Georgia"
+                                Value="{x:Bind SettingsViewModel.SettingsFontSize}"
+                                IsThumbToolTipEnabled="True"
+                                TickFrequency="2"
+                                SnapsTo="Ticks"
+                                Margin="0,24,0,0"
+                                ValueChanged="RangeBase_OnValueChanged"/>
+                    </StackPanel>
+                </PivotItem>
+                <PivotItem x:Uid="AboutPivotItem" Header="about">
+                    <StackPanel>
+                        <TextBlock Text="Developers"
+                                   x:Uid="DeveloperTitleTextBlock"
+                                   Style="{StaticResource H4TextBlockStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Sebastian Hug"
+                                       Style="{StaticResource NiceTextBlockStyle}"
+                                       Grid.Column="0"
+                                       VerticalAlignment="Center"/>
+                            <Button x:Uid="TwitterButton"
+                                    Click="{x:Bind SettingsViewModel.GotoTwitterSebastian}"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"/>
+                        </Grid>
+
+                        <TextBlock Text="App version"
+                                   x:Uid="AppVersionTitleTextBlock"
+                                   Style="{StaticResource H4TextBlockStyle}"
+                                   Margin="0,24,0,0"/>
+                        <TextBlock Text="{Binding AppVersion}"
+                                   Typography.NumeralStyle="Lining"
+                                   Style="{StaticResource NiceTextBlockStyle}"/>
+
+                        <TextBlock Text="Copyright"
+                                   x:Uid="CopyrightTitleTextBlock"
+                                   Style="{StaticResource H4TextBlockStyle}"
+                                   Margin="0,24,0,0"/>
+                        <TextBlock x:Uid="PersonalCopyrightTextBlock"
+                                   Text="This app is not the official app by the NZZ. Copyrights belong to the NZZ group."
+                                   Style="{StaticResource NiceTextBlockStyle}"/>
+
+                        <Button x:Uid="NzzCopyrightButton"
+                                Click="{x:Bind SettingsViewModel.Copyright}"/>
+                        <Button x:Uid="NzzImpressumButton"
+                                Click="{x:Bind SettingsViewModel.Impressum}"/>
+                        <Button x:Uid="NzzContactButton"
+                                Click="{x:Bind SettingsViewModel.Contact}"/>
+                    </StackPanel>
+                </PivotItem>
+                <PivotItem x:Uid="FeedbackPivotItem" Header="feedback">
+                    <StackPanel>
+                        <TextBlock x:Uid="FeedbackInfoTextBlock"
+                                   Text="Thank your for your feedback."
+                                   Style="{StaticResource NiceTextBlockStyle}"/>
+                        <Button Content="Give feedback"
+                                x:Uid="FeedbackButton"
+                                Click="{x:Bind SettingsViewModel.Feedback}"/>
+                        <Button Content="Rate app"
+                                Click="{x:Bind SettingsViewModel.RateApp}"
+                                x:Uid="RateButton"/>
+                    </StackPanel>
+                </PivotItem>
+            </Pivot.Items>
+        </Pivot>
+    </Grid>
+</application:View>
+

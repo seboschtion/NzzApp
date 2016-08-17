@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Name="DefaultListViewStyle" TargetType="ListView">
+        <Setter Property="SelectionMode" Value="None"/>
+        <Setter Property="ShowsScrollingPlaceholders" Value="True"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource StretchedListViewItemStyle}"/>
+    </Style>
+
+    <Style x:Key="StretchedListViewItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource NoHoverListViewItemStyle}">
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="MinHeight" Value="0"/>
+    </Style>
+
+    <Style x:Name="ScrollDisabledListViewStyle" TargetType="ListView" BasedOn="{StaticResource DefaultListViewStyle}">
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+
+    <Style x:Key="NoHoverListViewItemStyle" TargetType="ListViewItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <ContentPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

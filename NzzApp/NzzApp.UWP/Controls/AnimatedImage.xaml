@@ -1,0 +1,17 @@
+﻿<UserControl
+    x:Class="NzzApp.UWP.Controls.AnimatedImage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Controls">
+    <UserControl.Resources>
+        <Storyboard x:Name="ShowImageStoryBoard">
+            <Storyboard TargetName="Image" TargetProperty="Opacity">
+                <DoubleAnimation To="1" Duration="00:00:00.5"/>
+            </Storyboard>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Image x:Name="Image"
+           Opacity="0"
+           CacheMode="BitmapCache"/>
+</UserControl>

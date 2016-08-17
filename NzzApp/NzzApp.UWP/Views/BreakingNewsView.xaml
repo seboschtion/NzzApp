@@ -1,0 +1,57 @@
+﻿<application:View
+    x:Class="NzzApp.UWP.Views.BreakingNewsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NzzApp.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:application="using:Sebastian.Toolkit.Application"
+    mc:Ignorable="d"
+    x:Name="BreakingNewsPage">
+    <Page.Transitions>
+        <TransitionCollection>
+            <PopupThemeTransition/>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{ThemeResource WarningBrush}"
+                Height="18"
+                CornerRadius="9"
+                Padding="12,0"
+                Margin="12,32,12,12"
+                HorizontalAlignment="Left">
+            <TextBlock Text="{x:Bind BreakingNewsViewModel.BreakingNews.SpeakingName, Mode=OneWay}"
+                       Style="{StaticResource DefaultTextBlockStyle}"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <Line Stroke="{ThemeResource DashedLineBrush}"
+              StrokeThickness="1"
+              X1="0"
+              X2="360"
+              StrokeDashArray="4,2"
+              VerticalAlignment="Top"
+              Grid.Row="1"/>
+
+        <ListView ItemsSource="{x:Bind BreakingNewsViewModel.BreakingNews.Articles, Mode=OneWay}"
+                  x:Name="ArticlesListView"
+                  Style="{StaticResource DefaultListViewStyle}"
+                  ItemTemplate="{StaticResource ArticleInBreakingViewTemplate}"
+                  Grid.Row="1">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+    </Grid>
+</application:View>
+
